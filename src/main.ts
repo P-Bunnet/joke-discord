@@ -32,7 +32,7 @@ axiosClient.interceptors.response.use(
 
 const getJoke = async () => {
   const response = await axiosClient.get(
-    "/Any?blacklistFlags=religious,racist"
+    "/Any?blacklistFlags=religious,racist,nsfw"
   );
   //   console.log(response.data);
   return response.data;
@@ -40,7 +40,15 @@ const getJoke = async () => {
 
 const getJokeCode = async () => {
   const response = await axiosClient.get(
-    "/Programming?blacklistFlags=religious,racist"
+    "/Programming?blacklistFlags=religious,racist,nsfw"
+  );
+  //   console.log(response.data);
+  return response.data;
+};
+
+const getJokeDark = async () => {
+  const response = await axiosClient.get(
+    "/Dark?blacklistFlags=religious,racist,nsfw"
   );
   //   console.log(response.data);
   return response.data;
@@ -65,8 +73,30 @@ client.on("messageCreate", (message: Message) => {
   // log the message
   //   check if message start with !joke
   if (message.content.startsWith("!joke")) {
-    if (message.content !== "!joke code") {
+    if (message.content.toLowerCase() !== "!joke code") {
       getJoke().then((joke) => {
+        // console.log(joke);
+        if (joke.type === "single") {
+          var embed = new MessageEmbed()
+            .setTitle("brooooooo")
+            .setDescription(joke.joke)
+            .setImage(
+              "https://cdn.discordapp.com/attachments/834975400429617164/991257157167239188/unknown.png"
+            );
+          message.channel.send({ embeds: [embed] });
+        } else {
+          var embed = new MessageEmbed()
+            .setTitle(joke.setup)
+            .setDescription(joke.delivery)
+            .setImage(
+              "https://cdn.discordapp.com/attachments/834975400429617164/991257157167239188/unknown.png"
+            );
+          message.channel.send({ embeds: [embed] });
+        }
+      });
+    }
+    if (message.content.toLowerCase() === "!joke dark") {
+      getJokeDark().then((joke) => {
         // console.log(joke);
         if (joke.type === "single") {
           var embed = new MessageEmbed()
