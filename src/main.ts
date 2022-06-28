@@ -94,9 +94,8 @@ client.on("messageCreate", (message: Message) => {
           message.channel.send({ embeds: [embed] });
         }
       });
-    }
-    if (message.content.toLowerCase() === "!joke dark") {
-      getJokeDark().then((joke) => {
+    } else if (message.content.toLowerCase() === "!joke dark") {
+      getJoke().then((joke) => {
         // console.log(joke);
         if (joke.type === "single") {
           var embed = new MessageEmbed()
