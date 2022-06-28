@@ -8,7 +8,7 @@ dotenv.config({ path: "./.env." });
 
 // api call handler
 import axios from "axios";
-import { getJoke } from "./commands";
+import { getFact, getJoke } from "./commands";
 
 const axiosClient = axios.create({
   baseURL: `https://v2.jokeapi.dev/joke`,
@@ -169,5 +169,18 @@ client.on("messageCreate", (message: Message) => {
   }
 
   if (message.content.startsWith("!fact")) {
+    getFact()
+      .then((fact: any) => {
+        var embed = new MessageEmbed()
+          .setTitle("ly fact of the day")
+          .setDescription(fact.text)
+          .setImage(
+            "https://cdn.discordapp.com/attachments/834975400429617164/991355583716413510/unknown.png"
+          );
+        message.channel.send({ embeds: [embed] });
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
   }
 });
