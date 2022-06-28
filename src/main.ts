@@ -8,7 +8,7 @@ dotenv.config({ path: "./.env." });
 
 // api call handler
 import axios from "axios";
-import { channel } from "diagnostics_channel";
+import { getJoke } from "./commands";
 
 const axiosClient = axios.create({
   baseURL: `https://v2.jokeapi.dev/joke`,
@@ -30,29 +30,29 @@ axiosClient.interceptors.response.use(
 
 // commands
 
-const getJoke = async () => {
-  const response = await axiosClient.get(
-    "/Any?blacklistFlags=religious,racist,nsfw"
-  );
-  //   console.log(response.data);
-  return response.data;
-};
+// const getJoke = async () => {
+//   const response = await axiosClient.get(
+//     "/Any?blacklistFlags=religious,racist,nsfw"
+//   );
+//   //   console.log(response.data);
+//   return response.data;
+// };
 
-const getJokeCode = async () => {
-  const response = await axiosClient.get(
-    "/Programming?blacklistFlags=religious,racist,nsfw"
-  );
-  //   console.log(response.data);
-  return response.data;
-};
+// const getJokeCode = async () => {
+//   const response = await axiosClient.get(
+//     "/Programming?blacklistFlags=religious,racist,nsfw"
+//   );
+//   //   console.log(response.data);
+//   return response.data;
+// };
 
-const getJokeDark = async () => {
-  const response = await axiosClient.get(
-    "/Dark?blacklistFlags=religious,racist,nsfw"
-  );
-  //   console.log(response.data);
-  return response.data;
-};
+// const getJokeDark = async () => {
+//   const response = await axiosClient.get(
+//     "/Dark?blacklistFlags=religious,racist,nsfw"
+//   );
+//   //   console.log(response.data);
+//   return response.data;
+// };
 
 const token = process.env.DISCORD_TOKEN;
 
@@ -71,52 +71,81 @@ client.on("ready", () => {
 client.on("messageCreate", (message: Message) => {
   if (message.author.bot) return;
   // log the message
+
   //   check if message start with !joke
   if (message.content.startsWith("!joke")) {
-    if (message.content.toLowerCase() !== "!joke code") {
-      getJoke().then((joke) => {
-        // console.log(joke);
-        if (joke.type === "single") {
-          var embed = new MessageEmbed()
-            .setTitle("brooooooo")
-            .setDescription(joke.joke)
-            .setImage(
-              "https://cdn.discordapp.com/attachments/834975400429617164/991257157167239188/unknown.png"
-            );
-          message.channel.send({ embeds: [embed] });
-        } else {
-          var embed = new MessageEmbed()
-            .setTitle(joke.setup)
-            .setDescription(joke.delivery)
-            .setImage(
-              "https://cdn.discordapp.com/attachments/834975400429617164/991257157167239188/unknown.png"
-            );
-          message.channel.send({ embeds: [embed] });
-        }
-      });
-    } else if (message.content.toLowerCase() === "!joke dark") {
-      getJoke().then((joke) => {
-        // console.log(joke);
-        if (joke.type === "single") {
-          var embed = new MessageEmbed()
-            .setTitle("brooooooo")
-            .setDescription(joke.joke)
-            .setImage(
-              "https://cdn.discordapp.com/attachments/834975400429617164/991257157167239188/unknown.png"
-            );
-          message.channel.send({ embeds: [embed] });
-        } else {
-          var embed = new MessageEmbed()
-            .setTitle(joke.setup)
-            .setDescription(joke.delivery)
-            .setImage(
-              "https://cdn.discordapp.com/attachments/834975400429617164/991257157167239188/unknown.png"
-            );
-          message.channel.send({ embeds: [embed] });
-        }
-      });
-    } else {
-      getJokeCode().then((joke) => {
+    try {
+      var chat = message.content.split(" ");
+      console.log(chat);
+      if (chat[1].toLowerCase() == "code") {
+        // console.log("code");
+        getJoke("Programming").then((joke: any) => {
+          // console.log(joke);
+          if (joke.type === "single") {
+            var embed = new MessageEmbed()
+              .setTitle("brooooooo")
+              .setDescription(joke.joke)
+              .setImage(
+                "https://cdn.discordapp.com/attachments/834975400429617164/991257157167239188/unknown.png"
+              );
+            message.channel.send({ embeds: [embed] });
+          } else {
+            var embed = new MessageEmbed()
+              .setTitle(joke.setup)
+              .setDescription(joke.delivery)
+              .setImage(
+                "https://cdn.discordapp.com/attachments/834975400429617164/991257157167239188/unknown.png"
+              );
+            message.channel.send({ embeds: [embed] });
+          }
+        });
+      } else if (chat[1].toLowerCase() === "dark") {
+        // console.log("Dark");
+        getJoke("Dark").then((joke: any) => {
+          // console.log(joke);
+          if (joke.type === "single") {
+            var embed = new MessageEmbed()
+              .setTitle("brooooooo")
+              .setDescription(joke.joke)
+              .setImage(
+                "https://cdn.discordapp.com/attachments/834975400429617164/991257157167239188/unknown.png"
+              );
+            message.channel.send({ embeds: [embed] });
+          } else {
+            var embed = new MessageEmbed()
+              .setTitle(joke.setup)
+              .setDescription(joke.delivery)
+              .setImage(
+                "https://cdn.discordapp.com/attachments/834975400429617164/991257157167239188/unknown.png"
+              );
+            message.channel.send({ embeds: [embed] });
+          }
+        });
+      } else {
+        getJoke("Any").then((joke: any) => {
+          // console.log(joke);
+          if (joke.type === "single") {
+            var embed = new MessageEmbed()
+              .setTitle("brooooooo")
+              .setDescription(joke.joke)
+              .setImage(
+                "https://cdn.discordapp.com/attachments/834975400429617164/991257157167239188/unknown.png"
+              );
+            message.channel.send({ embeds: [embed] });
+          } else {
+            var embed = new MessageEmbed()
+              .setTitle(joke.setup)
+              .setDescription(joke.delivery)
+              .setImage(
+                "https://cdn.discordapp.com/attachments/834975400429617164/991257157167239188/unknown.png"
+              );
+            message.channel.send({ embeds: [embed] });
+          }
+        });
+      }
+    } catch (err) {
+      console.log("err" + err);
+      getJoke("Any").then((joke: any) => {
         // console.log(joke);
         if (joke.type === "single") {
           var embed = new MessageEmbed()
@@ -137,5 +166,8 @@ client.on("messageCreate", (message: Message) => {
         }
       });
     }
+  }
+
+  if (message.content.startsWith("!fact")) {
   }
 });

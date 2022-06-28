@@ -7,6 +7,7 @@ dotenv.config({ path: "./.env." });
 // import Discord and Intents from discord.js
 // api call handler
 import axios from "axios";
+import { getJoke } from "./commands";
 const axiosClient = axios.create({
     baseURL: `https://v2.jokeapi.dev/joke`,
     headers: {
@@ -22,16 +23,27 @@ axiosClient.interceptors.response.use(function (response) {
     return Promise.reject(error);
 });
 // commands
-const getJoke = async () => {
-    const response = await axiosClient.get("/Any?blacklistFlags=religious,racist");
-    //   console.log(response.data);
-    return response.data;
-};
-const getJokeCode = async () => {
-    const response = await axiosClient.get("/Programming?blacklistFlags=religious,racist");
-    //   console.log(response.data);
-    return response.data;
-};
+// const getJoke = async () => {
+//   const response = await axiosClient.get(
+//     "/Any?blacklistFlags=religious,racist,nsfw"
+//   );
+//   //   console.log(response.data);
+//   return response.data;
+// };
+// const getJokeCode = async () => {
+//   const response = await axiosClient.get(
+//     "/Programming?blacklistFlags=religious,racist,nsfw"
+//   );
+//   //   console.log(response.data);
+//   return response.data;
+// };
+// const getJokeDark = async () => {
+//   const response = await axiosClient.get(
+//     "/Dark?blacklistFlags=religious,racist,nsfw"
+//   );
+//   //   console.log(response.data);
+//   return response.data;
+// };
 const token = process.env.DISCORD_TOKEN;
 const client = new Discord.Client({
     intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
@@ -44,13 +56,35 @@ client.on("ready", () => {
 });
 // on cliend messageCreate response with a message
 client.on("messageCreate", (message) => {
+    var chat = message.content.split(" ");
     if (message.author.bot)
         return;
     // log the message
     //   check if message start with !joke
     if (message.content.startsWith("!joke")) {
-        if (message.content !== "!joke code") {
-            getJoke().then((joke) => {
+        if (chat[1].toLowerCase() == "code") {
+            console.log("code");
+            getJoke("Programming").then((joke) => {
+                // console.log(joke);
+                if (joke.type === "single") {
+                    var embed = new MessageEmbed()
+                        .setTitle("brooooooo")
+                        .setDescription(joke.joke)
+                        .setImage("https://cdn.discordapp.com/attachments/834975400429617164/991257157167239188/unknown.png");
+                    message.channel.send({ embeds: [embed] });
+                }
+                else {
+                    var embed = new MessageEmbed()
+                        .setTitle(joke.setup)
+                        .setDescription(joke.delivery)
+                        .setImage("https://cdn.discordapp.com/attachments/834975400429617164/991257157167239188/unknown.png");
+                    message.channel.send({ embeds: [embed] });
+                }
+            });
+        }
+        else if (chat[1].toLowerCase() === "dark") {
+            console.log("Dark");
+            getJoke("Dark").then((joke) => {
                 // console.log(joke);
                 if (joke.type === "single") {
                     var embed = new MessageEmbed()
@@ -69,7 +103,7 @@ client.on("messageCreate", (message) => {
             });
         }
         else {
-            getJokeCode().then((joke) => {
+            getJoke("Any").then((joke) => {
                 // console.log(joke);
                 if (joke.type === "single") {
                     var embed = new MessageEmbed()
@@ -87,5 +121,7 @@ client.on("messageCreate", (message) => {
                 }
             });
         }
+    }
+    if (message.content.startsWith("!fact")) {
     }
 });
