@@ -9,9 +9,7 @@ export default async (message: Message) => {
         .setDescription(
           `Title: ${anime.result[0].filename} \n Episodes: ${
             anime.result[0].episode
-          } \n nh jbas ta ${parseFloat(anime.result[0].similarity).toFixed(
-            2
-          )}% te`
+          } \n nh jbas ta ${parseFloat(anime.result[0].similarity) * 100}% te`
         )
         .setImage(anime.result[0].image);
       message.channel.send({ embeds: [embed] });
