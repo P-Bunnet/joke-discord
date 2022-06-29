@@ -1,5 +1,5 @@
 import axios from "axios";
-
+// joke call handler
 const axiosClient = axios.create({
   baseURL: `https://v2.jokeapi.dev/joke`,
   headers: {
@@ -17,6 +17,8 @@ axiosClient.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+// fact call handler
 const axiosFact = axios.create({
   baseURL: `https://uselessfacts.jsph.pl/random.json?language=en`,
   headers: {
@@ -34,14 +36,4 @@ axiosFact.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-// commands
-
-// create promise axios function
-export function getJoke(type: any) {
-  return axiosClient.get(`/${type}?blacklistFlags=religious,racist,nsfw`);
-}
-
-export function getFact() {
-  return axiosFact.get("");
-}
+export { axiosClient, axiosFact };
