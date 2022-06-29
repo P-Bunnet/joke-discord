@@ -36,4 +36,24 @@ axiosFact.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-export { axiosClient, axiosFact };
+
+// anime
+const axiosAnime = axios.create({
+  baseURL: `https://api.trace.moe/search`,
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  },
+});
+axiosAnime.interceptors.response.use(
+  function (response) {
+    // console.log(response.request);
+    return response.data;
+  },
+  function (error) {
+    let res = error.response;
+    console.error("Looks like there was a problem. Status Code: " + res.status);
+    return Promise.reject(error);
+  }
+);
+export { axiosClient, axiosFact, axiosAnime };

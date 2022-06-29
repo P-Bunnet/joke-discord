@@ -1,4 +1,4 @@
-import { axiosClient, axiosFact } from "./axiosHandler";
+import { axiosAnime, axiosClient, axiosFact } from "./axiosHandler";
 
 // commands
 
@@ -9,4 +9,8 @@ export function getJoke(type: any) {
 
 export function getFact() {
   return axiosFact.get("");
+}
+
+export function getAnime(url: string) {
+  return axiosAnime.get(`?url=${url}`);
 }

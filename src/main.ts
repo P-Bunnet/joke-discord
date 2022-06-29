@@ -11,6 +11,7 @@ import axios from "axios";
 import { getFact, getJoke } from "./requests";
 import joke from "./commands/joke";
 import fact from "./commands/fact";
+import anime from "./commands/anime";
 
 const token = process.env.DISCORD_TOKEN;
 
@@ -37,5 +38,8 @@ client.on("messageCreate", (message: Message) => {
 
   if (message.content.startsWith("!fact")) {
     fact(message);
+  }
+  if (message.content.startsWith("!anime")) {
+    anime(message);
   }
 });
