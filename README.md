@@ -8,3 +8,11 @@ https://uselessfacts.jsph.pl/
 https://sv443.net/jokeapi/v2/
 
 https://catfact.ninja/
+
+# RUN COMMAND
+
+yarn start:local
+
+or
+
+npm run start:local
