@@ -62,12 +62,8 @@ const axiosStoic = async () => {
     const { data, status } = await axios.get(
       'https://api.themotivate365.com/stoic-quote'
     );
-
-    console.log(JSON.stringify(data, null, 4));
-
     // 👇️ "response status is: 200"
-    console.log('response status is: ', status);
-
+    // console.log('response status is: ', status);
     return data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
