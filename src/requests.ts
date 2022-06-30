@@ -1,4 +1,4 @@
-import { axiosAnime, axiosClient, axiosFact } from "./axiosHandler";
+import { axiosAnime, axiosClient, axiosFact, axiosStoic } from "./axiosHandler";
 
 // commands
 
@@ -13,4 +13,8 @@ export function getFact() {
 
 export function getAnime(url: string) {
   return axiosAnime.get(`?url=${url}`);
+}
+
+export function getStoic() {
+  return axiosStoic();
 }

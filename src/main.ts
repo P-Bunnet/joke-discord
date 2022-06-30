@@ -1,4 +1,4 @@
-import { Intents, Message, MessageEmbed } from "discord.js";
+import { Intents, Message } from "discord.js";
 import dotenv from "dotenv";
 import Discord from "discord.js";
 dotenv.config();
@@ -7,11 +7,10 @@ dotenv.config({ path: "./.env." });
 // import Discord and Intents from discord.js
 
 // api call handler
-import axios from "axios";
-import { getFact, getJoke } from "./requests";
 import joke from "./commands/joke";
 import fact from "./commands/fact";
 import anime from "./commands/anime";
+import stoic from "./commands/stoic";
 
 const token = process.env.DISCORD_TOKEN;
 
@@ -35,11 +34,13 @@ client.on("messageCreate", (message: Message) => {
   if (message.content.startsWith("!joke")) {
     joke(message);
   }
-
-  if (message.content.startsWith("!fact")) {
+  else if (message.content.startsWith("!fact")) {
     fact(message);
   }
-  if (message.content.startsWith("!anime")) {
+  else if (message.content.startsWith("!anime")) {
     anime(message);
+  }
+  else if (message.content.startsWith("!stoic")) {
+    stoic(message);
   }
 });

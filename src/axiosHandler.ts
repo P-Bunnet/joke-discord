@@ -56,4 +56,29 @@ axiosAnime.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-export { axiosClient, axiosFact, axiosAnime };
+
+const axiosStoic = async () => {
+  try {
+    const { data, status } = await axios.get(
+      'https://api.themotivate365.com/stoic-quote'
+    );
+
+    console.log(JSON.stringify(data, null, 4));
+
+    // 👇️ "response status is: 200"
+    console.log('response status is: ', status);
+
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log('error message: ', error.message);
+      return error.message;
+    } else {
+      console.log('unexpected error: ', error);
+      return 'An unexpected error occurred';
+    }
+  }
+  
+}
+
+export { axiosClient, axiosFact, axiosAnime, axiosStoic };
