@@ -9,6 +9,8 @@ https://sv443.net/jokeapi/v2/
 
 https://catfact.ninja/
 
+https://api.themotivate365.com/stoic-quote
+
 # RUN COMMAND
 
 yarn start:local
