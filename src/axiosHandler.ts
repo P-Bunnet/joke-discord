@@ -56,4 +56,15 @@ axiosAnime.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-export { axiosClient, axiosFact, axiosAnime };
+
+const leauge = (name: string) =>
+  axios.request({
+    method: "GET",
+    url: `https://mobafire-lol-builds.p.rapidapi.com/api/champions/${name}/runes`,
+    headers: {
+      "X-RapidAPI-Key": "d397acbdb6mshaf84fbd85273f57p17a4dejsn2ce7db4e1a2a",
+      "X-RapidAPI-Host": "mobafire-lol-builds.p.rapidapi.com",
+    },
+  });
+
+export { axiosClient, axiosFact, axiosAnime, leauge };

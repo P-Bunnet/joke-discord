@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/P-Bunnet/joke-discord#readme",
   "dependencies": {
+    "@discordjs/builders": "^0.15.0",
     "@discordx/importer": "^1.1.9",
     "@discordx/pagination": "^2.1.2",
     "axios": "^0.27.2",
